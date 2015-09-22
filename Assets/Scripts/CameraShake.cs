@@ -6,13 +6,14 @@ using System.Collections;
 * @author Niek Schoone
 **/
 
-public class CameraShake : MonoBehaviour {
+public class CameraShake : MonoBehaviour 
+{
 	
 	private Vector3 originPosition;
 	private Quaternion originRotation;
 	
-	public float shake_decay;
-	public float shake_intensity;
+	public float shakeDecay;
+	public float shakeIntensity;
 	
 	private bool shaking;
 
@@ -29,17 +30,17 @@ public class CameraShake : MonoBehaviour {
 		{
 			return;
 		}
-		if (shake_intensity > 0f)
+		if (shakeIntensity > 0f)
 		{
-			_transform.localPosition = originPosition + Random.insideUnitSphere * shake_intensity;
+			_transform.localPosition = originPosition + Random.insideUnitSphere * shakeIntensity;
 
 			_transform.localRotation = new Quaternion(
-				originRotation.x + Random.Range (-shake_intensity,shake_intensity),
-				originRotation.y + Random.Range (-shake_intensity,shake_intensity),
-				originRotation.z + Random.Range (-shake_intensity,shake_intensity),
-				originRotation.w + Random.Range (-shake_intensity,shake_intensity));
+				originRotation.x + Random.Range (-shakeIntensity,shakeIntensity),
+				originRotation.y + Random.Range (-shakeIntensity,shakeIntensity),
+				originRotation.z + Random.Range (-shakeIntensity,shakeIntensity),
+				originRotation.w + Random.Range (-shakeIntensity,shakeIntensity));
 
-			shake_intensity -= shake_decay;	
+			shakeIntensity -= shakeDecay;	
 		}else 
 		{
 			Debug.Log("stopped shaking");
@@ -49,7 +50,7 @@ public class CameraShake : MonoBehaviour {
 		}
 	}
 	
-	public void Shake()
+	public void Shake(float givenIntensity, float givenDecay)
 	{
 		if(!shaking) 
 		{
@@ -57,8 +58,8 @@ public class CameraShake : MonoBehaviour {
 			originRotation = _transform.localRotation;	
 		}
 		shaking = true;
-		shake_intensity = 0.01f;
-		shake_decay = 0.002f;
+		shakeIntensity = givenIntensity;
+		shakeDecay = givenDecay;
 	}
 }
 
