@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
 	void Start()
 	{
-		nextWaveTime = 30;
+		nextWaveTime = 10;
 		enemyAmount = 1;
 		waveCount = 0;
 

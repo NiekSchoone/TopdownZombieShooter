@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
 			_rigidBody.velocity = new Vector2 (_rigidBody.velocity.x, 0);
 		}
 		
-		//Player rotates towards the mouse pointer / recticle 
+		//Player rotates towards the mouse pointer / recticle
 		_mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		transform.rotation = Quaternion.LookRotation(Vector3.forward, _mousePos - transform.position);
+		transform.rotation = Quaternion.LookRotation(Vector3.forward , _mousePos - transform.position);
 	}
 }

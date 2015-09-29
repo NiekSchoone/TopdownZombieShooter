@@ -13,9 +13,9 @@ public class PistolWeapon : Weapon
 	{
 		Debug.Log ("Fire");
 
-		rate = 0.3f;
+		rate = 0.4f;
 
-		accuracyRange = 2;
+		accuracyRange = 4;
 		finalAccuracy = Random.Range(-accuracyRange, accuracyRange);
 
 		Vector2 shootDirection = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -24,17 +24,22 @@ public class PistolWeapon : Weapon
 		float angle = Mathf.Atan2(shootDirection.y,shootDirection.x) * Mathf.Rad2Deg - 90;
 		
 		GameObject newBullet = Instantiate(bulletPrefab, new Vector2(baseWeapon.transform.position.x, baseWeapon.transform.position.y) + (shootDirection.normalized / 2), Quaternion.Euler(0,0,angle + finalAccuracy)) as GameObject;
-		Camera.main.GetComponent<CameraShake>().Shake(0.01f, 0.002f);
 	}
 
 	public override void Update()
 	{
-		rate -= Time.deltaTime;
-		if(rate <= 0)
+		if(ammo >= 0)
 		{
-			if(Input.GetMouseButton(0))
+			if(rate <= 0)
 			{
-				Shoot();
+				if(Input.GetMouseButton(0))
+				{
+					Shoot();
+					Camera.main.GetComponent<CameraShake>().Shake(0.005f, 0.002f);
+				}
+			}else
+			{
+				rate -= Time.deltaTime;
 			}
 		}
 	}

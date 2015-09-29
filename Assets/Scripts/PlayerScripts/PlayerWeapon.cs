@@ -14,15 +14,20 @@ public class PlayerWeapon : MonoBehaviour
 	public Dictionary<WeaponType, Weapon> weapons = new Dictionary<WeaponType, Weapon>();
 
 	private Transform weaponBase;
+	private SpriteRenderer sprtRenderer;
+	private Sprite currentSprite;
 
 	public GameObject getAudioManager;
 
-	public WeaponType currentWeapon = WeaponType.PISTOL;
+	public WeaponType currentWeapon;
 
 	void Start () 
 	{
-		weaponBase = this.transform;
+		currentWeapon = WeaponType.PISTOL;
 
+		weaponBase = this.transform;
+		sprtRenderer = this.GetComponent<SpriteRenderer>();
+	
 		weapons.Add(WeaponType.PISTOL, weaponAssigning[0]);
 		weapons.Add(WeaponType.UZI, weaponAssigning[1]);
 		weapons.Add(WeaponType.SHOTGUN, weaponAssigning[2]);
@@ -31,11 +36,46 @@ public class PlayerWeapon : MonoBehaviour
 		{
 			weaponAssigning[i].baseWeapon = weaponBase;
 		}
+
+		SwitchSprite();
 	}
 
 	void Update()
 	{
-		weapons[WeaponType.PISTOL].Update();
+		if(Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			currentWeapon = WeaponType.PISTOL;
+			SwitchSprite();
+		}else if(Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			currentWeapon = WeaponType.SHOTGUN;
+			SwitchSprite();
+		}else if(Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			currentWeapon = WeaponType.UZI;
+			SwitchSprite();
+		}
+		Debug.Log(currentWeapon);
+
+		weapons[currentWeapon].Update();
+	}
+
+	void SwitchSprite()
+	{
+		switch (currentWeapon) 
+		{
+		case WeaponType.PISTOL:
+			currentSprite = weaponAssigning[0].look;
+			break;
+		case WeaponType.SHOTGUN:
+			currentSprite = weaponAssigning[1].look;
+			break;
+		case WeaponType.UZI:
+			currentSprite = weaponAssigning[2].look;
+			break;
+		}
+		sprtRenderer.sprite = currentSprite;
+
 	}
 }
 

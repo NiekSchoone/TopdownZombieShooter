@@ -3,23 +3,18 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour 
 {
-	private Rigidbody2D rb2D;
+	private int myDamage;
 
-	private float maxSpeed;
-	
 	void Start()
 	{
-		rb2D = this.GetComponent<Rigidbody2D>();
-
-		maxSpeed = 10f;
+		myDamage = 20;
 	}
 
 	void FixedUpdate() 
 	{
-		rb2D.AddForce(transform.up * 200);
-		rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, maxSpeed);
+		transform.position += transform.up / 1.5f;
 
-		if(transform.position.x <= -10 || transform.position.x >= 10 || transform.position.y <= -8 || transform.position.y >= 10)
+		if(transform.position.x <= -10 || transform.position.x >= 10 || transform.position.y <= -10 || transform.position.y >= 10)
 		{
 			Destroy(this.gameObject);
 		}
@@ -29,8 +24,9 @@ public class Bullet : MonoBehaviour
 	{
 		if(col.gameObject.tag == "Enemy")
 		{
-
+			col.gameObject.GetComponent<Health>().HeatlthDecrease(myDamage);
+			Destroy(this.gameObject);
 		}
-		Destroy(this.gameObject);
+
 	}
 }
